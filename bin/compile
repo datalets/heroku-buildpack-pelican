@@ -68,6 +68,7 @@ else
   exit 1
 fi
 
+puts-step "Building with ($CONFIG_FILE)"
 pelican -d -o $BUILD_DIR/public -s $CONFIG_FILE $BUILD_DIR/content | indent
 
 puts-step "Installing pcre ($PCRE_VERSION)"
