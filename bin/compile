@@ -10,7 +10,6 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 CACHED_DIRS=".heroku"
 WORKING_DIR=$(pwd)
-ENVIRONMENT=$(ENV)
 
 rm -fr $CACHE_DIR
 mkdir -p $CACHE_DIR
@@ -58,8 +57,6 @@ else
   python -m pip install --quiet Markdown | indent
 fi
 
-
-puts-step "Environment : $ENVIRONMENT"
 puts-step "Running pelican"
 
 if [[ -f publishconf.py ]]; then
