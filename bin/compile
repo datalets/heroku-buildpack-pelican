@@ -8,9 +8,11 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 ROOT_DIR=$(dirname $BIN_DIR)
 BUILD_DIR=$1
 CACHE_DIR=$2
+ENV_DIR=$3
 CACHED_DIRS=".heroku"
 WORKING_DIR=$(pwd)
-ENVIRONMENT=$(ENV)
+
+puts-step "Using ENV_DIR: ($ENV_DIR)"
 
 rm -fr $CACHE_DIR
 mkdir -p $CACHE_DIR
@@ -58,8 +60,10 @@ else
   python -m pip install --quiet Markdown | indent
 fi
 
+puts-step "Exporting ENV_DIR"
+export_env_dir
+
 puts-step "Running pelican"
-puts-step "ENV ($ENVIRONMENT)"
 
 if [[ -f publishconf.py ]]; then
   CONFIG_FILE="publishconf.py"
