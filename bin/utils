@@ -56,6 +56,8 @@ function deep-mv (){
 export_env_dir() {
   echo "export_env_dir has been called"
   ENV_DIR=$3
+  echo "Current ENV_DIR: $ENV_DIR"
+
   WHITELIST_REGEX=${2:-''}
   BLACKLIST_REGEX=${3:-'^(GIT_DIR|PYTHONHOME|LD_LIBRARY_PATH|LIBRARY_PATH|PATH)$'}
   if [ -d "$ENV_DIR" ]; then

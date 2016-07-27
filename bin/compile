@@ -12,8 +12,6 @@ ENV_DIR=$3
 CACHED_DIRS=".heroku"
 WORKING_DIR=$(pwd)
 
-puts-step "Using ENV_DIR: ($ENV_DIR)"
-
 rm -fr $CACHE_DIR
 mkdir -p $CACHE_DIR
 
@@ -60,6 +58,7 @@ else
   python -m pip install --quiet Markdown | indent
 fi
 
+puts-step "Using ENV_DIR: ($ENV_DIR)"
 puts-step "Exporting ENV_DIR"
 export_env_dir
 
