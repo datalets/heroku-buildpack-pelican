@@ -58,7 +58,6 @@ else
   python -m pip install --quiet Markdown | indent
 fi
 
-puts-step "Using ENV_DIR: ($ENV_DIR)"
 puts-step "Exporting ENV_DIR"
 export_env_dir $ENV_DIR
 
