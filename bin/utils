@@ -55,7 +55,6 @@ function deep-mv (){
 
 export_env_dir() {
   echo "export_env_dir has been called"
-  ENV_DIR=$3
   echo "Current ENV_DIR: $ENV_DIR"
 
   WHITELIST_REGEX=${2:-''}
