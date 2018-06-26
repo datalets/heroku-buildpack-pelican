@@ -79,7 +79,7 @@ pelican -d -o $BUILD_DIR/public -s $CONFIG_FILE $BUILD_DIR/content | indent
 puts-step "Installing pcre ($PCRE_VERSION_FULL)"
 if [[ ! -d "$CACHE_DIR/$PCRE_VERSION_FULL" ]]; then
   cd $CACHE_DIR
-  curl -L http://downloads.sourceforge.net/project/pcre/pcre/$PCRE_VERSION/$PCRE_VERSION_FULL.tar.bz2 -s | tar jx &> /dev/null
+  curl -L http://downloads.sourceforge.net/project/pcre/pcre/$PCRE_VERSION/$PCRE_VERSION_FULL.tar.bz2 | tar jx &> /dev/null
 fi
 
 puts-step "Installing nginx ($NGINX_VERSION)"
