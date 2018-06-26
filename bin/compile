@@ -29,7 +29,10 @@ if [[ ! -d "$CACHE_DIR/$PYTHON_VERSION" ]]; then
   cd $CACHE_DIR
   puts-step "Installing Python ($PYTHON_VERSION)"
   mkdir $PYTHON_VERSION
-  curl https://lang-python.s3.amazonaws.com/$PYTHON_STACK/runtimes/$PYTHON_VERSION.tar.gz -s | tar zx -C $PYTHON_VERSION &> /dev/null
+  until $(curl https://lang-python.s3.amazonaws.com/$PYTHON_STACK/runtimes/$PYTHON_VERSION.tar.gz -s | tar zx -C $PYTHON_VERSION &> /dev/null); do
+    printf '.'
+    sleep 3
+  done
 fi
 
 # without setting a UTF-8 encoding, pip8 exposes a bug: https://github.com/multani/sonata/issues/72
@@ -79,13 +82,20 @@ pelican -d -o $BUILD_DIR/public -s $CONFIG_FILE $BUILD_DIR/content | indent
 puts-step "Installing pcre ($PCRE_VERSION_FULL)"
 if [[ ! -d "$CACHE_DIR/$PCRE_VERSION_FULL" ]]; then
   cd $CACHE_DIR
-  curl -L http://downloads.sourceforge.net/project/pcre/pcre/$PCRE_VERSION/$PCRE_VERSION_FULL.tar.bz2 | tar jx &> /dev/null
+  until $(curl -L http://downloads.sourceforge.net/project/pcre/pcre/$PCRE_VERSION/$PCRE_VERSION_FULL.tar.bz2 -s | tar jx &> /dev/null); do
+    printf '.'
+    sleep 3
+  done
 fi
 
 puts-step "Installing nginx ($NGINX_VERSION)"
 if [[ ! -d "$CACHE_DIR/$NGINX_VERSION" ]]; then
   cd $CACHE_DIR
-  curl http://nginx.org/download/$NGINX_VERSION.tar.gz | tar xz &> /dev/null
+  until $(curl http://nginx.org/download/$NGINX_VERSION.tar.gz | tar xz &> /dev/null); do
+    printf '.'
+    sleep 3
+  done
+
   cd $NGINX_VERSION
   ./configure --prefix=$BUILD_DIR/local \
     --with-pcre=$CACHE_DIR/$PCRE_VERSION_FULL \
