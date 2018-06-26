@@ -91,7 +91,7 @@ fi
 puts-step "Installing nginx ($NGINX_VERSION)"
 if [[ ! -d "$CACHE_DIR/$NGINX_VERSION" ]]; then
   cd $CACHE_DIR
-  until $(curl http://nginx.org/download/$NGINX_VERSION.tar.gz | tar xz &> /dev/null); do
+  until $(curl http://nginx.org/download/$NGINX_VERSION.tar.gz -s | tar xz &> /dev/null); do
     printf '.'
     sleep 3
   done
