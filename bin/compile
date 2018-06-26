@@ -16,10 +16,10 @@ rm -fr $CACHE_DIR
 mkdir -p $CACHE_DIR
 
 # Versions.
-PYTHON_VERSION="python-3.4.3"
+PYTHON_VERSION="python-3.6.3"
 PYTHON_STACK="cedar-14"
 NGINX_VERSION="nginx-1.7.2"
-PCRE_VERSION='pcre-8.36'
+PCRE_VERSION='pcre-8.42'
 source $BIN_DIR/utils
 
 mkdir -p $BUILD_DIR/local/sbin
@@ -108,4 +108,3 @@ fi
 
 cp $ROOT_DIR/conf/mime.types $BUILD_DIR/
 cp $BIN_DIR/launch-nginx "$BUILD_DIR/local/sbin"
-
