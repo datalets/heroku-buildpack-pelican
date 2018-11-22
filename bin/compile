@@ -8,6 +8,7 @@ BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 ROOT_DIR=$(dirname $BIN_DIR)
 BUILD_DIR=$1
 CACHE_DIR=$2
+ENV_DIR=$3
 CACHED_DIRS=".heroku"
 WORKING_DIR=$(pwd)
 
@@ -15,10 +16,10 @@ rm -fr $CACHE_DIR
 mkdir -p $CACHE_DIR
 
 # Versions.
-PYTHON_VERSION="python-3.4.3"
+PYTHON_VERSION="python-3.6.3"
 PYTHON_STACK="cedar-14"
 NGINX_VERSION="nginx-1.7.2"
-PCRE_VERSION='pcre-8.36'
+PCRE_VERSION='pcre-8.42'
 source $BIN_DIR/utils
 
 mkdir -p $BUILD_DIR/local/sbin
@@ -55,6 +56,9 @@ else
   python -m pip install --quiet Markdown | indent
 fi
 
+puts-step "Exporting ENV_DIR"
+export_env_dir $ENV_DIR
+
 puts-step "Running pelican"
 
 if [[ -f publishconf.py ]]; then
@@ -66,6 +70,7 @@ else
   exit 1
 fi
 
+puts-step "Building with ($CONFIG_FILE)"
 pelican -d -o $BUILD_DIR/public -s $CONFIG_FILE $BUILD_DIR/content | indent
 
 puts-step "Installing pcre ($PCRE_VERSION)"
