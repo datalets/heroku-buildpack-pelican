@@ -16,10 +16,10 @@ rm -fr $CACHE_DIR
 mkdir -p $CACHE_DIR
 
 # Versions.
-PYTHON_VERSION="python-3.6.3"
+PYTHON_VERSION="python-3.6.7"
 PYTHON_STACK="cedar-14"
-NGINX_VERSION="nginx-1.7.2"
-PCRE_VERSION='pcre-8.42'
+NGINX_VERSION="nginx-1.14.1"
+PCRE_VERSION="8.42'
 source $BIN_DIR/utils
 
 mkdir -p $BUILD_DIR/local/sbin
@@ -74,9 +74,9 @@ puts-step "Building with ($CONFIG_FILE)"
 pelican -d -o $BUILD_DIR/public -s $CONFIG_FILE $BUILD_DIR/content | indent
 
 puts-step "Installing pcre ($PCRE_VERSION)"
-if [[ ! -d "$CACHE_DIR/$PCRE_VERSION" ]]; then
+if [[ ! -d "$CACHE_DIR/pcre-$PCRE_VERSION" ]]; then
   cd $CACHE_DIR
-  curl -L http://downloads.sourceforge.net/pcre/$PCRE_VERSION.tar.bz2 -s | tar jx &> /dev/null
+  curl -L http://downloads.sourceforge.net/pcre/$PCRE_VERSION/pcre-$PCRE_VERSION.tar.bz2 -s | tar jx &> /dev/null
 fi
 
 puts-step "Installing nginx ($NGINX_VERSION)"
@@ -85,7 +85,7 @@ if [[ ! -d "$CACHE_DIR/$NGINX_VERSION" ]]; then
   curl http://nginx.org/download/$NGINX_VERSION.tar.gz -s | tar xz &> /dev/null
   cd $NGINX_VERSION
   ./configure --prefix=$BUILD_DIR/local \
-    --with-pcre=$CACHE_DIR/$PCRE_VERSION \
+    --with-pcre=$CACHE_DIR/pcre-$PCRE_VERSION \
     --without-select_module \
     --without-poll_module \
     --without-http_gzip_module \
@@ -106,4 +106,3 @@ fi
 
 cp $ROOT_DIR/conf/mime.types $BUILD_DIR/
 cp $BIN_DIR/launch-nginx "$BUILD_DIR/local/sbin"
-
