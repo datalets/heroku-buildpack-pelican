@@ -19,14 +19,14 @@ mkdir -p $CACHE_DIR
 PYTHON_VERSION="python-3.6.7"
 PYTHON_STACK="cedar-14"
 NGINX_VERSION="nginx-1.14.1"
-PCRE_VERSION="8.42'
+PCRE_VERSION="8.42"
 source $BIN_DIR/utils
 
 mkdir -p $BUILD_DIR/local/sbin
 
 if [[ ! -d "$CACHE_DIR/$PYTHON_VERSION" ]]; then
   cd $CACHE_DIR
-  puts-step "Installing Python $PYTHON_VERSION"
+  puts-step "Installing Python ($PYTHON_VERSION)"
   mkdir $PYTHON_VERSION
   curl https://lang-python.s3.amazonaws.com/$PYTHON_STACK/runtimes/$PYTHON_VERSION.tar.gz -s | tar zx -C $PYTHON_VERSION &> /dev/null
 fi
@@ -70,16 +70,16 @@ else
   exit 1
 fi
 
-puts-step "Building with $CONFIG_FILE"
+puts-step "Building with ($CONFIG_FILE)"
 pelican -d -o $BUILD_DIR/public -s $CONFIG_FILE $BUILD_DIR/content | indent
 
-puts-step "Installing pcre $PCRE_VERSION"
+puts-step "Installing pcre ($PCRE_VERSION)"
 if [[ ! -d "$CACHE_DIR/pcre-$PCRE_VERSION" ]]; then
   cd $CACHE_DIR
   curl -L http://downloads.sourceforge.net/pcre/$PCRE_VERSION/pcre-$PCRE_VERSION.tar.bz2 -s | tar jx &> /dev/null
 fi
 
-puts-step "Installing nginx $NGINX_VERSION"
+puts-step "Installing nginx ($NGINX_VERSION)"
 if [[ ! -d "$CACHE_DIR/$NGINX_VERSION" ]]; then
   cd $CACHE_DIR
   curl http://nginx.org/download/$NGINX_VERSION.tar.gz -s | tar xz &> /dev/null
@@ -105,4 +105,4 @@ if [[ ! -f $BUILD_DIR/nginx.conf.erb ]]; then
 fi
 
 cp $ROOT_DIR/conf/mime.types $BUILD_DIR/
-cp $BIN_DIR/launch-nginx $BUILD_DIR/local/sbin
+cp $BIN_DIR/launch-nginx "$BUILD_DIR/local/sbin"
